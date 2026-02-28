@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Margot MacKechnie | Entrepreneur &amp; Sustainability Advocate</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700;800;900&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --green: #2D6A4F;
+      --green-light: #52B788;
+      --green-pale: #D8F3DC;
+      --blue: #1B4F72;
+      --blue-mid: #2874A6;
+      --white: #FAFAFA;
+      --black: #111111;
+      --gray: #444;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--white); color: var(--black); line-height: 1.6; }
+    h1, h2, h3, h4, .nav-logo, .section-title, .card-body h3, .footer-brand h2, .hero-tag, .section-label { font-family: 'Space Grotesk', system-ui, sans-serif; }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; width: 100%; z-index: 100;
+      background: rgba(250,250,250,0.96); backdrop-filter: blur(8px);
+      border-bottom: 2px solid var(--green-light);
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 0 8%; height: 64px;
+    }
+    .nav-logo { font-size: 1.4rem; font-weight: 800; letter-spacing: -0.5px; color: var(--green); text-decoration: none; }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { text-decoration: none; font-weight: 600; font-size: 0.9rem; color: var(--gray); letter-spacing: 0.5px; text-transform: uppercase; transition: color .2s; }
+    .nav-links a:hover { color: var(--green); }
+
+    /* HERO */
+    #hero {
+      min-height: 100vh;
+      background: linear-gradient(135deg, var(--blue) 0%, var(--green) 60%, var(--green-light) 100%);
+      display: flex; flex-direction: column; justify-content: center; align-items: flex-start;
+      padding: 0 8%; padding-top: 64px;
+    }
+    .hero-content { max-width: 700px; }
+    .hero-tag { display: inline-block; background: rgba(255,255,255,0.15); color: #fff; font-size: 0.8rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; padding: 6px 14px; border-radius: 20px; margin-bottom: 1.5rem; }
+    #hero h1 { font-size: clamp(2.4rem, 5vw, 3.8rem); font-weight: 900; color: #fff; line-height: 1.1; margin-bottom: 1.2rem; }
+    #hero h1 span { color: var(--green-pale); display: block; }
+    #hero p { font-size: 1.15rem; color: rgba(255,255,255,0.85); max-width: 560px; margin-bottom: 2rem; }
+    .btn-group { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .btn { padding: 14px 30px; border-radius: 4px; font-weight: 700; font-size: 0.95rem; text-decoration: none; transition: all .2s; }
+    .btn-primary { background: var(--green-light); color: #fff; }
+    .btn-primary:hover { background: var(--green); }
+    .btn-outline { background: transparent; color: #fff; border: 2px solid rgba(255,255,255,0.6); }
+    .btn-outline:hover { background: rgba(255,255,255,0.1); }
+
+    /* SECTIONS */
+    section { padding: 90px 8%; }
+    section:nth-child(even) { background: #f2f5f3; }
+    .section-label { font-size: 0.8rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--green-light); margin-bottom: 0.6rem; }
+    .section-title { font-size: clamp(2rem, 4vw, 2.8rem); font-weight: 900; line-height: 1.15; margin-bottom: 1.5rem; }
+    .section-title span { color: var(--green); }
+    .divider { width: 60px; height: 4px; background: linear-gradient(90deg, var(--green), var(--blue-mid)); border-radius: 2px; margin-bottom: 3rem; }
+
+    /* ABOUT */
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+    .about-text p { color: #555; margin-bottom: 1.2rem; font-size: 1.05rem; }
+    .skills-grid { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1.5rem; }
+    .skill-tag { padding: 6px 14px; background: var(--green-pale); color: var(--green); border-radius: 20px; font-size: 0.82rem; font-weight: 700; }
+    .about-highlight { background: linear-gradient(135deg, var(--blue) 0%, var(--green) 100%); color: #fff; border-radius: 12px; padding: 2.5rem; }
+    .about-highlight h3 { font-size: 1.2rem; font-weight: 800; margin-bottom: 1rem; color: var(--green-pale); letter-spacing: 1px; text-transform: uppercase; }
+
+    /* PROJECTS */
+    .projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 2rem; }
+    .project-card { background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,0.07); transition: transform .2s, box-shadow .2s; display: flex; flex-direction: column; }
+    .project-card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,0,0,0.12); }
+    .card-top { height: 6px; background: linear-gradient(90deg, var(--green), var(--blue-mid)); flex-shrink: 0; }
+    .card-body { padding: 1.8rem; display: flex; flex-direction: column; flex: 1; }
+    .card-tag { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: var(--green-light); margin-bottom: 0.6rem; }
+    .card-body h3 { font-size: 1.2rem; font-weight: 800; margin-bottom: 0.8rem; }
+    .card-body p { color: #666; font-size: 0.95rem; line-height: 1.65; margin-bottom: 1.2rem; }
+    .card-chips { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .chip { padding: 4px 10px; background: var(--green-pale); color: var(--green); border-radius: 12px; font-size: 0.75rem; font-weight: 600; }
+    .chip-blue { background: #dbeafe; color: var(--blue-mid); }
+    .card-btns { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-top: 1.2rem; }
+    .card-btn { padding: 10px 20px; border-radius: 4px; font-weight: 700; font-size: 0.82rem; text-decoration: none; transition: opacity .2s; }
+    .card-btn:hover { opacity: 0.85; }
+    .card-btn-green { background: var(--green); color: #fff; }
+    .card-btn-blue { background: var(--blue); color: #fff; }
+    .coming-soon { font-size: 0.82rem; color: #999; font-style: italic; margin-top: 1.2rem; }
+
+    /* TIMELINE */
+    .timeline { position: relative; padding-left: 2rem; }
+    .timeline::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: linear-gradient(180deg, var(--green-light), var(--blue-mid)); border-radius: 2px; }
+    .timeline-item { position: relative; margin-bottom: 2.8rem; }
+    .timeline-item::before { content: ''; position: absolute; left: -2.43rem; top: 6px; width: 14px; height: 14px; background: var(--green-light); border-radius: 50%; border: 3px solid #fff; box-shadow: 0 0 0 2px var(--green-light); }
+    .timeline-meta { font-size: 0.78rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--green-light); margin-bottom: 0.3rem; }
+    .timeline-item h3 { font-size: 1.1rem; font-weight: 800; margin-bottom: 0.2rem; }
+    .timeline-org { font-size: 0.9rem; font-weight: 600; color: var(--blue-mid); margin-bottom: 0.6rem; }
+    .timeline-item p { color: #666; font-size: 0.95rem; line-height: 1.65; }
+
+    /* FOOTER */
+    footer { background: #0d1f17; padding: 4rem 8%; }
+    .footer-grid { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 2rem; padding-bottom: 3rem; border-bottom: 1px solid rgba(255,255,255,0.1); }
+    .footer-brand h2 { font-size: 2rem; font-weight: 900; color: var(--green-light); }
+    .footer-brand p { color: rgba(255,255,255,0.55); margin-top: 0.5rem; max-width: 300px; }
+    .footer-links h4 { font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.5); margin-bottom: 1rem; }
+    .footer-links a { display: block; color: rgba(255,255,255,0.8); text-decoration: none; margin-bottom: 0.6rem; font-weight: 600; transition: color .2s; }
+    .footer-links a:hover { color: var(--green-light); }
+    .footer-bottom { margin-top: 2.5rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; color: rgba(255,255,255,0.35); font-size: 0.85rem; }
+
+    @media (max-width: 768px) {
+      .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .nav-links { display: none; }
+      section { padding: 70px 6%; }
+      nav { padding: 0 6%; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#hero">Margot MacKechnie</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-content">
+    <div class="hero-tag">Portfolio</div>
+    <h1>Margot MacKechnie<br/><span>Entrepreneur &amp;<br/>Sustainability Advocate</span></h1>
+    <p>Bridging business strategy, emerging technology, and environmental responsibility to build a more sustainable future.</p>
+    <div class="btn-group">
+      <a href="#projects" class="btn btn-primary">View My Work</a>
+      <a href="#contact" class="btn btn-outline">Get In Touch</a>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-label">About Me</div>
+  <div class="section-title">Strategy. <span>Sustainability.</span> Innovation.</div>
+  <div class="divider"></div>
+  <div class="about-grid">
+    <div class="about-text">
+      <p>I'm a senior at Syracuse University's Whitman School of Management, studying Entrepreneurship &amp; Emerging Enterprises with a minor in Information Technology, Design &amp; Startups from the iSchool.</p>
+      <p>My work lives at the intersection of sustainability, technology, and business innovation — from green supply chain management to community-centered retail concepts to AI ethics policy.</p>
+      <p>I'm passionate about building ventures that create both economic and environmental value, and I'm actively seeking opportunities in sustainability consulting, supply chain management, and international markets — particularly in Nordic countries known for their leading-edge environmental policy.</p>
+      <div class="skills-grid">
+        <div class="skill-tag">Python &amp; R</div>
+        <div class="skill-tag">Java &amp; JavaScript</div>
+        <div class="skill-tag">Supply Chain Strategy</div>
+        <div class="skill-tag">Sustainability Analysis</div>
+        <div class="skill-tag">Business Strategy</div>
+        <div class="skill-tag">Product Design</div>
+      </div>
+    </div>
+    <div class="about-highlight">
+      <h3>My Mission</h3>
+      <p style="font-size:1.05rem; line-height:1.8; opacity:0.95;">I believe the most powerful solutions sit at the intersection of innovation, technology, creativity, and sustainability — designed not just to minimize harm, but to actively create value for people and the planet alike. My work is driven by the conviction that business strategy and environmental responsibility are not trade-offs. They are the same goal.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-label">Projects</div>
+  <div class="section-title">What I've <span>Built</span></div>
+  <div class="divider"></div>
+  <div class="projects-grid">
+
+    <!-- WISE -->
+    <div class="project-card">
+      <div class="card-top"></div>
+      <div class="card-body">
+        <div class="card-tag">Consulting · Sustainability</div>
+        <h3>WISE Consulting</h3>
+        <p>Developed an expert recruitment strategy and sustainability analysis for a nonprofit expanding its volunteer advisory network across seven Central New York counties. Delivered quality assurance frameworks and stakeholder engagement plans.</p>
+        <div class="card-chips">
+          <span class="chip">Consulting</span>
+          <span class="chip">Sustainability</span>
+          <span class="chip chip-blue">CNY Region</span>
+        </div>
+        <div class="card-btns">
+          <a href="https://docs.google.com/presentation/d/1EvHMRs1fyRntDJNrTGoWOKuKvzMqjGhl_yYdOJrP_Bc/edit?usp=sharing" target="_blank" class="card-btn card-btn-green">View Presentation →</a>
+          <a href="https://docs.google.com/document/d/1xo9cv8ySDbCE934LcM7UE_8Lr-mgpxSB5EEAwhs89pU/edit?usp=sharing" target="_blank" class="card-btn card-btn-blue">View Report →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- SU TRADEMARKS -->
+    <div class="project-card">
+      <div class="card-top"></div>
+      <div class="card-body">
+        <div class="card-tag">Consulting · Sustainability</div>
+        <h3>SU Office of Trademarks &amp; Licensing</h3>
+        <p>Conducted a sustainability audit of Syracuse University's merchandise practices for the Office of Trademarks and Licensing, identifying opportunities to improve environmental responsibility across the university's licensed product supply chain.</p>
+        <div class="card-chips">
+          <span class="chip">Sustainability</span>
+          <span class="chip">Supply Chain</span>
+          <span class="chip chip-blue">Green Consulting</span>
+          <span class="chip chip-blue">Higher Ed</span>
+        </div>
+        <div class="card-btns">
+          <a href="https://docs.google.com/presentation/d/19_XMm5VR4oNW_IaMMToFF5BXWRILTLJflY8xQPsB-GE/edit?usp=sharing" target="_blank" class="card-btn card-btn-green">View Presentation →</a>
+          <a href="https://docs.google.com/document/d/1W9Rh-7nBjgMkG85drjR54cKI2GM_8bWqtV9wPosVy2U/edit?usp=sharing" target="_blank" class="card-btn card-btn-blue">View Report →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- THIRD PLACE -->
+    <div class="project-card">
+      <div class="card-top"></div>
+      <div class="card-body">
+        <div class="card-tag">Entrepreneurship · Retail</div>
+        <h3>Third Place</h3>
+        <p>A community-centered hybrid bookstore, café, and plant shop concept addressing the need for meaningful gathering spaces. Includes a full business plan with market research, financial projections, and customer discovery interviews.</p>
+        <div class="card-chips">
+          <span class="chip">Business Plan</span>
+          <span class="chip">Market Research</span>
+          <span class="chip chip-blue">Community Design</span>
+        </div>
+        <div class="card-btns">
+          <a href="https://margot-mackechnie.github.io/Third-Place/" target="_blank" class="card-btn card-btn-green">View Website →</a>
+          <a href="https://docs.google.com/document/d/1tpMhzgwFyVfSBHLWuEXwDjk_eUSZ6kvlcamd9U8KUIo/edit?usp=sharing" target="_blank" class="card-btn card-btn-blue">Business Plan →</a>
+          <a href="https://docs.google.com/document/d/1wnM7f3jC9bxloJZ3h5KEocZwcfhKLs7xYIkbpc6O87Y/edit?usp=sharing" target="_blank" class="card-btn card-btn-blue">Executive Summary →</a>
+          <a href="https://docs.google.com/document/d/1ETYcQ2LPBN8zDPHGSummLw3Sxe_T7rB24p80Egyfe98/edit?usp=sharing" target="_blank" class="card-btn card-btn-blue">Financial Plan →</a>
+          <a href="https://docs.google.com/document/d/18megwKiMskCF57jOim6rR17_qM4bKRZF_ESy5aYCas0/edit?usp=sharing" target="_blank" class="card-btn card-btn-blue">Bibliography →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- AI REGULATORY FRAMEWORK -->
+    <div class="project-card">
+      <div class="card-top"></div>
+      <div class="card-body">
+        <div class="card-tag">Policy · AI Ethics</div>
+        <h3>AI Regulatory Framework</h3>
+        <p>A comprehensive global AI sustainability and data governance policy framework synthesizing environmental regulations from multiple jurisdictions. Features a three-tier licensing system modeled on music industry rights management, applied to AI training data ethics.</p>
+        <div class="card-chips">
+          <span class="chip">AI Ethics</span>
+          <span class="chip">Policy</span>
+          <span class="chip chip-blue">Data Governance</span>
+          <span class="chip chip-blue">Sustainability</span>
+        </div>
+        <div class="card-btns">
+          <a href="https://drive.google.com/file/d/1kMMPIw40DwTfbPRAwlQ_8D2Dcw7OoG0j/view?usp=sharing" target="_blank" class="card-btn card-btn-green">View White Paper →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- AI SUSTAINABILITY ASSESSMENT FRAMEWORK -->
+    <div class="project-card">
+      <div class="card-top"></div>
+      <div class="card-body">
+        <div class="card-tag">AI · Sustainability · Policy</div>
+        <h3>AI Sustainability Assessment Framework</h3>
+        <p>A global framework synthesizing environmental regulations from six or more jurisdictions and applying them across the full AI lifecycle — from raw material extraction to hardware end-of-life. Includes an interactive scoring tool, regulatory inventory, and differentiated compliance tiers for organizations of varying capacity.</p>
+        <div class="card-chips">
+          <span class="chip">AI Governance</span>
+          <span class="chip">Policy</span>
+          <span class="chip chip-blue">Interactive Tool</span>
+          <span class="chip chip-blue">Global Regulations</span>
+        </div>
+        <div class="card-btns">
+          <a href="https://margot-mackechnie.github.io/Global-AI-Sustainability-Framework/" target="_blank" class="card-btn card-btn-green">View Live Site →</a>
+          <a href="https://drive.google.com/file/d/1QVPMlOmPxisg6csVMBlTGCLPftdvU_Af/view?usp=sharing" target="_blank" class="card-btn card-btn-blue">View Document →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- CSRD TOOL -->
+    <div class="project-card">
+      <div class="card-top"></div>
+      <div class="card-body">
+        <div class="card-tag">EU Regulation · Sustainability · Interactive Tool</div>
+        <h3>CSRD Double Materiality Assessment Tool</h3>
+        <p>An interactive, guided assessment tool implementing the EU Corporate Sustainability Reporting Directive's double materiality framework. Features sector-based pre-population, impact and financial materiality scoring across 10 ESRS topics, stakeholder consultation logging, radar chart visualization, and PDF export.</p>
+        <div class="card-chips">
+          <span class="chip">CSRD</span>
+          <span class="chip">EU Policy</span>
+          <span class="chip chip-blue">Interactive Tool</span>
+          <span class="chip chip-blue">Sustainability Reporting</span>
+        </div>
+        <div class="card-btns">
+          <a href="https://margot-mackechnie.github.io/CSRD-Double-Materiality-Assessment-Tool/" target="_blank" class="card-btn card-btn-green">View Live Tool →</a>
+          <a href="https://drive.google.com/file/d/15BVe8i_V2-5ImPjnQlqfFtcITtnpSYk1/view?usp=sharing" target="_blank" class="card-btn card-btn-blue">View Document →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- CIRCULAR ECONOMY -->
+    <div class="project-card">
+      <div class="card-top"></div>
+      <div class="card-body">
+        <div class="card-tag">Circular Economy · Interactive Tool</div>
+        <h3>Circular Economy Business Model Analyzer</h3>
+        <p>An interactive assessment tool based on the Ellen MacArthur Foundation's ReSOLVE framework. Features a circular-adapted Business Model Canvas, material loop mapping, dimension scoring with radar chart visualization, and PDF export. Includes an embedded methodology page grounding the tool in circular economy theory and academic sources.</p>
+        <div class="card-chips">
+          <span class="chip">Circular Economy</span>
+          <span class="chip">ReSOLVE</span>
+          <span class="chip chip-blue">Interactive Tool</span>
+          <span class="chip chip-blue">Sustainability</span>
+        </div>
+        <div class="card-btns">
+          <a href="https://margot-mackechnie.github.io/Circular-Economy-Business-Model-Analyzer/index.html" target="_blank" class="card-btn card-btn-green">View Live Tool →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- BEYOND CARBON ACCOUNTING -->
+    <div class="project-card">
+      <div class="card-top"></div>
+      <div class="card-body">
+        <div class="card-tag">Policy · AI · Sustainability</div>
+        <h3>Beyond Carbon Accounting</h3>
+        <p>A 7,000-word policy paper arguing that AI sustainability governance must begin at the data layer, not the hardware layer. Proposes three mutually reinforcing mechanisms — dataset efficiency standards, a three-tier licensing framework modeled on music industry rights management, and mandatory pre-training environmental assessments — grounded in EU regulatory theory.</p>
+        <div class="card-chips">
+          <span class="chip">AI Governance</span>
+          <span class="chip">Policy Paper</span>
+          <span class="chip chip-blue">Data Governance</span>
+          <span class="chip chip-blue">EU Regulation</span>
+        </div>
+        <div class="card-btns">
+          <a href="https://drive.google.com/file/d/1QUY1Xvw1zE_NdmE_yHs43on5PeXs66BP/view?usp=sharing" target="_blank" class="card-btn card-btn-green">Read Paper →</a>
+          <a href="https://drive.google.com/file/d/1v15d-GfgB4FjiXvyy8OFT9O5zhxVXwcJ/view?usp=sharing" target="_blank" class="card-btn card-btn-blue">View Abstract →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- SOLARPUNK ESSAY -->
+    <div class="project-card">
+      <div class="card-top"></div>
+      <div class="card-body">
+        <div class="card-tag">Essay · Sustainability · Futures</div>
+        <h3>After the Crisis: Solarpunk and the Architecture of a Livable Future</h3>
+        <p>An academic essay examining solarpunk as a serious policy framework rather than merely an aesthetic movement. Covers distributed energy systems, regenerative food design, biophilic urbanism, technology as commons, and participatory governance — grounded in urban planning literature, ecological economics, and systems design, with 35 cited sources.</p>
+        <div class="card-chips">
+          <span class="chip">Solarpunk</span>
+          <span class="chip">Futures Studies</span>
+          <span class="chip chip-blue">Policy</span>
+          <span class="chip chip-blue">Sustainability</span>
+        </div>
+        <div class="card-btns">
+          <a href="https://drive.google.com/file/d/1EMJ8sW8V3YIUu7bygJBzc2bu2UoxvObI/view?usp=sharing" target="_blank" class="card-btn card-btn-green">Read Essay →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- GREENGENUITY -->
+    <div class="project-card">
+      <div class="card-top"></div>
+      <div class="card-body">
+        <div class="card-tag">Sustainability · Energy</div>
+        <h3>Greengenuity — Providence Sustainable Energy Plan</h3>
+        <p>Developed a sustainable energy management and development plan for a section of Providence, RI through PrepareRI Skills for Rhode Island's Future, in partnership with Verdigris AI. Applied real-world energy planning frameworks to create actionable, community-level sustainability recommendations.</p>
+        <div class="card-chips">
+          <span class="chip">Energy Planning</span>
+          <span class="chip">Sustainability</span>
+          <span class="chip chip-blue">Verdigris AI</span>
+          <span class="chip chip-blue">PrepareRI</span>
+        </div>
+        <p class="coming-soon">Project files coming soon.</p>
+      </div>
+    </div>
+
+    <!-- RESCUE KITCHEN CAPSULE -->
+    <div class="project-card">
+      <div class="card-top"></div>
+      <div class="card-body">
+        <div class="card-tag">Design · Sustainability · DES 363</div>
+        <h3>Rescue Kitchen Capsule</h3>
+        <p>A design project exploring sustainable solutions for displaced populations through a modular, resource-efficient kitchen capsule concept. Developed as part of DES 363, focusing on human-centered design, material responsibility, and emergency response contexts.</p>
+        <div class="card-chips">
+          <span class="chip">Product Design</span>
+          <span class="chip">Sustainability</span>
+          <span class="chip chip-blue">Human-Centered</span>
+          <span class="chip chip-blue">DES 363</span>
+        </div>
+        <div class="card-btns">
+          <a href="https://docs.google.com/presentation/d/1GFKX41wQ16b_d2cOEGOrepHf9ZlNfiIQ/edit?usp=sharing&ouid=104644728069036405893&rtpof=true&sd=true" target="_blank" class="card-btn card-btn-green">View Presentation →</a>
+          <a href="https://docs.google.com/document/d/190T3mv2hNGfpGFZU8idoNazoe23lmyyS3gi1x4SBvbY/edit?usp=sharing" target="_blank" class="card-btn card-btn-blue">View Report →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- NEXUS MODULAR SYSTEM -->
+    <div class="project-card">
+      <div class="card-top"></div>
+      <div class="card-body">
+        <div class="card-tag">Design · Circular Economy · DES 363</div>
+        <h3>Nexus Modular System</h3>
+        <p>A modular gaming peripheral system designed around circular economy principles, recycled materials, and material transparency. Argues that sustainability and desirability are not opposites, synthesizing lessons from design culture and constraint-based design thinking.</p>
+        <div class="card-chips">
+          <span class="chip">Circular Economy</span>
+          <span class="chip">Product Design</span>
+          <span class="chip chip-blue">Sustainability</span>
+          <span class="chip chip-blue">DES 363</span>
+        </div>
+        <div class="card-btns">
+          <a href="https://docs.google.com/presentation/d/1oW9nXWMjtrW2wDeU1eZykSKF7ZLb5euo/edit?usp=sharing&ouid=104644728069036405893&rtpof=true&sd=true" target="_blank" class="card-btn card-btn-green">View Presentation →</a>
+          <a href="https://docs.google.com/document/d/1PL9clrlYTpakitYR2Ny9biulgcqNOpuvE54Gc-5gGKo/edit?usp=sharing" target="_blank" class="card-btn card-btn-blue">View Report →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- PLASTIC OCEAN -->
+    <div class="project-card">
+      <div class="card-top"></div>
+      <div class="card-body">
+        <div class="card-tag">Mobile App · Environmental</div>
+        <h3>Plastic Ocean</h3>
+        <p>Built and launched an environmental mobile app for the international Technovation Girls competition. Recognized with the NCWIT Aspirations in Computing award for demonstrated technical skills and commitment to social impact through technology.</p>
+        <div class="card-chips">
+          <span class="chip">Mobile App</span>
+          <span class="chip">Environmental</span>
+          <span class="chip chip-blue">Technovation Girls</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-label">Experience</div>
+  <div class="section-title">Where I've <span>Worked</span></div>
+  <div class="divider"></div>
+  <div class="timeline">
+
+    <div class="timeline-item">
+      <div class="timeline-meta">2025 – Present</div>
+      <h3>Founder &amp; Business Strategist</h3>
+      <div class="timeline-org">Third Place (iLaunchpad, Syracuse University)</div>
+      <p>Designing and pitching a full business concept for a hybrid bookstore, café, and plant shop targeting community gathering needs. Producing comprehensive market analysis, customer discovery interviews, and multi-year financial projections.</p>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-meta">Fall 2025</div>
+      <h3>Strategy &amp; Sustainability Consultant</h3>
+      <div class="timeline-org">WISE — Central New York</div>
+      <p>Led expert recruitment strategy development and sustainability analysis for a nonprofit expanding its volunteer and advisory network across seven CNY counties. Built quality assurance frameworks and stakeholder engagement plans.</p>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-meta">Fall 2025</div>
+      <h3>Sustainability Analyst</h3>
+      <div class="timeline-org">SU Office of Trademarks &amp; Licensing — SCM 440</div>
+      <p>Conducted a sustainability audit of Syracuse University's merchandise practices for the Office of Trademarks and Licensing, identifying opportunities to improve environmental responsibility across the university's licensed product supply chain.</p>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-meta">Summer 2024</div>
+      <h3>Sustainable Energy Analyst</h3>
+      <div class="timeline-org">Greengenuity — PrepareRI / Verdigris AI</div>
+      <p>Developed a sustainable energy management and development plan for a section of Providence, RI through PrepareRI Skills for Rhode Island's Future, in partnership with Verdigris AI. Applied real-world energy planning frameworks to create actionable, community-level sustainability recommendations.</p>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-meta">High School</div>
+      <h3>App Developer &amp; Co-Founder</h3>
+      <div class="timeline-org">Plastic Ocean — Technovation Girls</div>
+      <p>Built and launched an environmental mobile app for the international Technovation Girls competition. Received NCWIT Aspirations in Computing recognition for demonstrated technical skills and commitment to social impact through technology.</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- FOOTER / CONTACT -->
+<footer id="contact">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <h2>Let's Connect.</h2>
+      <p>Open to sustainability consulting, supply chain, and international opportunities — especially in Nordic &amp; EU markets.</p>
+      <br/>
+      <a href="https://www.linkedin.com/in/margot-mackechnie-sustainable-innovation/" target="_blank" style="display:inline-block; padding:12px 28px; background:var(--green-light); color:#fff; border-radius:4px; font-weight:700; text-decoration:none; font-size:0.95rem;">Connect on LinkedIn →</a>
+    </div>
+    <div class="footer-links">
+      <h4>Connect</h4>
+      <a href="https://www.linkedin.com/in/margot-mackechnie-sustainable-innovation/" target="_blank">LinkedIn</a>
+      <a href="https://github.com/Margot-MacKechnie" target="_blank">GitHub</a>
+      <a href="https://docs.google.com/document/d/147beWoMLutEdlTON7K8jutFWvrJdCcD2NUPjZIJZcC8/edit?usp=sharing" target="_blank">Resume</a>
+    </div>
+    <div class="footer-links">
+      <h4>Navigate</h4>
+      <a href="#about">About</a>
+      <a href="#projects">Projects</a>
+      <a href="#experience">Experience</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Margot MacKechnie. All rights reserved.</span>
+    <span>Syracuse University · Whitman School of Management · May 2026</span>
+  </div>
+</footer>
+
+</body>
+</html>
