@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nordic Sustainability Landscape | Margot MacKechnie</title>
+<style>
+  :root{
+    --fjord: #1c3d4f;
+    --fjord-deep: #0f2530;
+    --birch: #f4f0e6;
+    --moss: #5c7a63;
+    --lichen: #d9b26a;
+    --ink: #23282b;
+    --line: rgba(28,61,79,0.15);
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    background: var(--birch);
+    color: var(--ink);
+  }
+  header{
+    background: var(--fjord-deep);
+    color: var(--birch);
+    padding: 48px 32px 32px;
+  }
+  header h1{
+    font-size: 28px;
+    font-weight: 700;
+    margin: 0 0 6px;
+    letter-spacing: 0.2px;
+  }
+  header p{
+    margin: 0;
+    max-width: 620px;
+    color: rgba(244,240,230,0.75);
+    font-size: 14.5px;
+    line-height: 1.5;
+  }
+  .stats{
+    display:flex;
+    gap: 28px;
+    margin-top: 24px;
+    flex-wrap: wrap;
+  }
+  .stat-num{ font-size: 26px; font-weight: 700; color: var(--lichen); }
+  .stat-label{ font-size: 11.5px; text-transform: uppercase; letter-spacing: 0.08em; color: rgba(244,240,230,0.6); }
+
+  .controls{
+    display:flex;
+    gap: 10px;
+    padding: 20px 32px;
+    background: #fff;
+    border-bottom: 1px solid var(--line);
+    flex-wrap: wrap;
+    position: sticky;
+    top: 0;
+    z-index: 5;
+  }
+  .chip{
+    border: 1px solid var(--line);
+    background: transparent;
+    color: var(--fjord);
+    padding: 7px 14px;
+    border-radius: 999px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  .chip:hover{ background: rgba(28,61,79,0.06); }
+  .chip.active{ background: var(--fjord); color: var(--birch); border-color: var(--fjord); }
+
+  main{ padding: 28px 32px 60px; max-width: 1180px; margin: 0 auto; }
+
+  section.gov{
+    margin-bottom: 36px;
+  }
+  section.gov h2, section.companies h2{
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--moss);
+    margin: 0 0 14px;
+  }
+  .gov-grid{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 10px;
+  }
+  .gov-card{
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--moss);
+    background: #fff;
+    padding: 14px 16px;
+    font-size: 13.5px;
+  }
+  .gov-card b{ display:block; font-size: 14px; margin-bottom: 3px; }
+  .gov-card span{ font-size: 11.5px; color: var(--moss); text-transform: uppercase; letter-spacing: 0.05em; }
+
+  .grid{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+    gap: 14px;
+  }
+  .card{
+    border: 1px solid var(--line);
+    background: #fff;
+    padding: 16px 18px;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .card:hover{ transform: translateY(-2px); box-shadow: 0 6px 18px rgba(28,61,79,0.08); }
+  .card-top{ display:flex; justify-content: space-between; align-items:flex-start; margin-bottom: 8px;}
+  .card h3{ font-size: 15.5px; margin: 0; }
+  .flag{
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    padding: 2px 7px;
+    border-radius: 4px;
+    background: var(--fjord);
+    color: var(--birch);
+    white-space: nowrap;
+  }
+  .flag.fi{ background: var(--moss); }
+  .flag.both{ background: var(--lichen); color: var(--fjord-deep); }
+  .card p{ font-size: 13px; line-height: 1.5; color: #444; margin: 0; }
+  .card .sector{ font-size: 11px; color: var(--moss); text-transform: uppercase; letter-spacing: 0.05em; margin-top: 8px; display:block; }
+
+  .empty{ padding: 40px 0; text-align:center; color: var(--moss); font-size: 14px; }
+
+  footer{
+    padding: 22px 32px;
+    font-size: 12px;
+    color: #777;
+    border-top: 1px solid var(--line);
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Nordic Sustainability Landscape</h1>
+  <p>An interactive research map of the sustainability and ESG ecosystem across Denmark and Finland — companies, government initiatives, and policy context. Built and maintained by Margot MacKechnie.</p>
+  <div class="stats">
+    <div><div class="stat-num" id="companyCount">0</div><div class="stat-label">Companies</div></div>
+    <div><div class="stat-num">9</div><div class="stat-label">Gov. Initiatives</div></div>
+    <div><div class="stat-num">2</div><div class="stat-label">Countries</div></div>
+  </div>
+</header>
+
+<div class="controls" id="controls"></div>
+
+<main>
+  <section class="gov">
+    <h2>Government &amp; Policy Initiatives</h2>
+    <div class="gov-grid" id="govGrid"></div>
+  </section>
+
+  <section class="companies">
+    <h2>Companies</h2>
+    <div class="grid" id="companyGrid"></div>
+    <div class="empty" id="emptyState" style="display:none;">No companies match this filter.</div>
+  </section>
+</main>
+
+<footer>
+  Sources: company sustainability programs and public disclosures; government initiative details from official Danish and Finnish government publications. Compiled April–July 2026.
+</footer>
+
+<script>
+const govInitiatives = [
+  {name: "Denmark's Climate Act (Klimalov)", country:"DK", note:"Legally binding target of 70% emissions reduction by 2030 vs. 1990 levels."},
+  {name: "Danish Green Tax Reform", country:"DK", note:"CO2 tax on industrial emissions, phased in from 2025."},
+  {name: "Denmark National Circular Economy Strategy", country:"DK", note:"Government strategy for circular business models and material reuse."},
+  {name: "State of Green Partnership", country:"DK", note:"Danish public-private green transition partnership and knowledge hub."},
+  {name: "Danish Ecodesign & Ecolabelling Schemes", country:"DK", note:"Product-level sustainability standards under Danish and EU frameworks."},
+  {name: "Finland Carbon Neutrality 2035 Target", country:"FI", note:"National goal to reach carbon neutrality by 2035, among the most ambitious globally."},
+  {name: "Finnish Climate Change Act (Ilmastolaki)", country:"FI", note:"Legal framework for climate planning and emissions monitoring."},
+  {name: "Finland Circular Economy Roadmap", country:"FI", note:"National roadmap (with Sitra) for transitioning to a circular economy by 2035."},
+  {name: "Finland National Energy & Climate Strategy", country:"FI", note:"Government strategy governing energy transition and climate policy implementation."}
+];
+
+const companies = [
+  {name:"Ørsted", country:"DK", sector:"Energy", note:"World's leading offshore wind developer; net-zero by 2025 target."},
+  {name:"Vestas", country:"DK", sector:"Energy", note:"Global wind turbine manufacturer headquartered in Aarhus."},
+  {name:"Neste", country:"FI", sector:"Energy", note:"Renewable fuels and circular economy leader."},
+  {name:"Fortum", country:"FI", sector:"Energy", note:"Finnish clean energy company with strong ESG reporting."},
+  {name:"Copenhagen Infrastructure Partners", country:"DK", sector:"Energy", note:"Major renewable energy fund manager."},
+  {name:"Better Energy", country:"DK", sector:"Energy", note:"Fast-growing Danish solar energy developer."},
+  {name:"Danfoss", country:"DK", sector:"Industrials", note:"Energy efficiency and climate solutions manufacturer."},
+  {name:"Grundfos", country:"DK", sector:"Industrials", note:"Global leader in sustainable water solutions."},
+  {name:"Novo Nordisk", country:"DK", sector:"Pharma", note:"One of the most mature corporate ESG programs in Europe."},
+  {name:"Maersk", country:"DK", sector:"Logistics", note:"World's largest shipping company; major decarbonization strategy."},
+  {name:"UPM", country:"FI", sector:"Materials", note:"Finnish sustainable forestry and biomaterials company."},
+  {name:"Wärtsilä", country:"FI", sector:"Industrials", note:"Marine and energy technology; strong decarbonization focus."},
+  {name:"Nokia", country:"FI", sector:"Technology", note:"Finnish tech multinational with established ESG reporting."},
+  {name:"Carlsberg Group", country:"DK", sector:"Consumer", note:"'Together Towards ZERO' sustainability program."},
+  {name:"Deloitte", country:"BOTH", sector:"Advisory", note:"Major sustainability and climate advisory practice, Copenhagen & Helsinki."},
+  {name:"EY", country:"BOTH", sector:"Advisory", note:"Large ESG advisory practice across Scandinavia."},
+  {name:"PwC", country:"BOTH", sector:"Advisory", note:"Strong Nordic sustainability consulting presence."},
+  {name:"KPMG", country:"BOTH", sector:"Advisory", note:"ESG assurance and advisory teams in Nordic offices."},
+  {name:"McKinsey & Company", country:"BOTH", sector:"Advisory", note:"Sustainability practice in Copenhagen and Helsinki."},
+  {name:"Boston Consulting Group", country:"BOTH", sector:"Advisory", note:"Climate and sustainability practice across Nordic offices."},
+  {name:"Accenture", country:"BOTH", sector:"Advisory", note:"Large sustainability and ESG practice, Nordic offices."},
+  {name:"Ramboll", country:"DK", sector:"Engineering", note:"Danish sustainability and engineering consultancy."},
+  {name:"Cowi", country:"DK", sector:"Engineering", note:"Danish infrastructure and sustainability consultancy."},
+  {name:"Sweco", country:"BOTH", sector:"Engineering", note:"Nordic sustainability and engineering consultancy."},
+  {name:"WSP Global", country:"BOTH", sector:"Engineering", note:"Global sustainability engineering and advisory firm."},
+  {name:"Microsoft", country:"BOTH", sector:"Technology", note:"Sustainability Cloud team; Nordic offices."},
+  {name:"SAP", country:"BOTH", sector:"Technology", note:"Sustainability reporting and ESG software leader."},
+  {name:"Siemens", country:"BOTH", sector:"Industrials", note:"Sustainability engineering and smart infrastructure."},
+  {name:"UN Environment Programme", country:"FI", sector:"NGO / IGO", note:"Partially based in Helsinki; sustainability policy focus."},
+  {name:"Nordic Council of Ministers", country:"DK", sector:"NGO / IGO", note:"Copenhagen-based intergovernmental sustainability policy body."},
+  {name:"State of Green", country:"DK", sector:"NGO / IGO", note:"Danish public-private green transition partnership."}
+];
+
+let activeCountry = "ALL";
+let activeSector = "ALL";
+
+function flagClass(c){
+  if(c==="DK") return "flag";
+  if(c==="FI") return "flag fi";
+  return "flag both";
+}
+function flagLabel(c){
+  if(c==="DK") return "Denmark";
+  if(c==="FI") return "Finland";
+  return "DK / FI";
+}
+
+function renderGov(){
+  const grid = document.getElementById('govGrid');
+  grid.innerHTML = govInitiatives.map(g => `
+    <div class="gov-card">
+      <span>${flagLabel(g.country)}</span>
+      <b>${g.name}</b>
+      ${g.note}
+    </div>
+  `).join('');
+}
+
+function renderCompanies(){
+  const grid = document.getElementById('companyGrid');
+  const empty = document.getElementById('emptyState');
+  const filtered = companies.filter(c => {
+    const countryMatch = activeCountry === "ALL" || c.country === activeCountry || c.country === "BOTH";
+    const sectorMatch = activeSector === "ALL" || c.sector === activeSector;
+    return countryMatch && sectorMatch;
+  });
+  document.getElementById('companyCount').textContent = companies.length;
+
+  if(filtered.length === 0){
+    grid.innerHTML = "";
+    empty.style.display = "block";
+    return;
+  }
+  empty.style.display = "none";
+  grid.innerHTML = filtered.map(c => `
+    <div class="card">
+      <div class="card-top">
+        <h3>${c.name}</h3>
+        <span class="${flagClass(c.country)}">${flagLabel(c.country)}</span>
+      </div>
+      <p>${c.note}</p>
+      <span class="sector">${c.sector}</span>
+    </div>
+  `).join('');
+}
+
+function renderControls(){
+  const sectors = ["ALL", ...new Set(companies.map(c => c.sector))];
+  const countries = [
+    {key:"ALL", label:"All countries"},
+    {key:"DK", label:"Denmark"},
+    {key:"FI", label:"Finland"}
+  ];
+  const controls = document.getElementById('controls');
+  controls.innerHTML = `
+    ${countries.map(c => `<button class="chip country-chip ${c.key===activeCountry?'active':''}" data-country="${c.key}">${c.label}</button>`).join('')}
+    <span style="width:1px;background:var(--line);margin:0 6px;"></span>
+    ${sectors.map(s => `<button class="chip sector-chip ${s===activeSector?'active':''}" data-sector="${s}">${s==="ALL"?"All sectors":s}</button>`).join('')}
+  `;
+
+  document.querySelectorAll('.country-chip').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      activeCountry = btn.dataset.country;
+      renderControls();
+      renderCompanies();
+    });
+  });
+  document.querySelectorAll('.sector-chip').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      activeSector = btn.dataset.sector;
+      renderControls();
+      renderCompanies();
+    });
+  });
+}
+
+renderGov();
+renderControls();
+renderCompanies();
+</script>
+
+</body>
+</html>
